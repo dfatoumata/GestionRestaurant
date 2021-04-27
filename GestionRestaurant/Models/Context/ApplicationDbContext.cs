@@ -20,6 +20,6 @@ namespace GestionRestaurant.Models.Context
         public DbSet<TableCmd> Tables { get; set; }
         public DbSet<Produit> Produits { get; set; }
         public DbSet<Consommation> Consommations { get; set; }
-
+        //Test Change
     }
 }
