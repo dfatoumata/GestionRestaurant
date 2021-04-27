@@ -8,18 +8,16 @@ namespace GestionRestaurant.Models.Context
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext() :base()
-        {
-
-        }
         public ApplicationDbContext(DbContextOptions options):base(options)
         {
 
         }
         public DbSet<Serveur> Serveurs { get; set; }
-        public DbSet<TableCmd> Tables { get; set; }
+        public DbSet<TableCmd> TableCmds { get; set; }
         public DbSet<Produit> Produits { get; set; }
         public DbSet<Consommation> Consommations { get; set; }
         //Test Change
+        //Validation
+        //Teste 3
     }
 }
