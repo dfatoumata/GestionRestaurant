@@ -1,5 +1,6 @@
 ﻿using GestionRestaurant.Models;
 using GestionRestaurant.Models.Context;
+using GestionRestaurant.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,9 @@ namespace GestionRestaurant.Repositories.Implementations
         }
         public Produit GetByID(int Id)
         {
-            return _dbContext.Produits.Find(Id);
+            var Produits = _dbContext.Produits.Find(Id);
+            _dbContext.Entry(Produits).State = EntityState.Detached;
+            return Produits;
         }
 
         public void Update(Produit Produit)

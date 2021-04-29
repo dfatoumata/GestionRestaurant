@@ -1,5 +1,6 @@
 ﻿using GestionRestaurant.Models;
 using GestionRestaurant.Models.Context;
+using GestionRestaurant.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,13 +29,14 @@ namespace GestionRestaurant.Repositories.Implementations
         }
         public Serveur GetByID(int Id)
         {
-            return _dbContext.Serveurs.Find(Id);
+            var serveur = _dbContext.Serveurs.Find(Id);
+            _dbContext.Entry(serveur).State = EntityState.Detached;
+            return serveur;
         }
 
         public void Update(Serveur serveur)
         {
             _dbContext.Entry(serveur).State = EntityState.Modified;
-
         }
         public void DeleteByID(int Id)
         {

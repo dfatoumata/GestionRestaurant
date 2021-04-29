@@ -1,4 +1,6 @@
 using GestionRestaurant.Models.Context;
+using GestionRestaurant.Repositories.Implementations;
+using GestionRestaurant.Repositories.Interfaces;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,7 +35,8 @@ namespace GestionRestaurant
                     sqlServerOptionsAction: sqlOptions =>
                     {
                         sqlOptions.MigrationsAssembly(typeof(Startup).GetTypeInfo().Assembly.GetName().Name);
-                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
+                        sqlOptions.EnableRetryOnFailure(maxRetryCount: 10, 
+                            maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null);
                     });
 
             },
@@ -41,12 +44,23 @@ namespace GestionRestaurant
             //Showing explicitly that the DbContext is shared across the HTTP request scope (graph of objects started in the HTTP request)
  
                 );
+            services.AddScoped<IServeurRepository, ServeurRepository>();
+            services.AddScoped<IProduitRepository, ProduitRepository>();
+            services.AddScoped<ITableCmdRepository, TableCmdRepository>();
+            services.AddScoped<IConsommationRepository, ConsommationRepository>();
+
+            //Add Auto Mapper
+            services.AddAutoMapper(typeof(Startup));
+            services.AddSwaggerGen();
+
             services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -63,6 +77,12 @@ namespace GestionRestaurant
             app.UseRouting();
 
             app.UseAuthorization();
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
+            });
+
 
             app.UseEndpoints(endpoints =>
             {
@@ -70,6 +90,7 @@ namespace GestionRestaurant
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
         }
     }
 }

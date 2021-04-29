@@ -1,7 +1,7 @@
 ﻿using GestionRestaurant.Models;
 using System.Collections.Generic;
 
-namespace GestionRestaurant.Repositories.Implementations
+namespace GestionRestaurant.Repositories.Interfaces
 {
     public interface IServeurRepository
     {

@@ -1,0 +1,82 @@
+﻿@model IEnumerable<GestionRestaurant.Models.TableCmd>
+
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="d-flex  justify-content-md-around">
+    <div class="card card text-white text-center bg-primary col-5">
+        <div class="card-body">
+            <h5 class="card-title">Tables occupées</h5>
+            <p class="card-text">
+                <h1>
+                    @ViewBag.tableocc
+                </h1>
+            </p>
+        </div>
+    </div>
+    <div class="card text-white text-center bg-danger col-5">
+        <div class="card-body">
+            <h5 class="card-title">Tables libres</h5>
+            <p class="card-text">
+                <h1>
+                    @ViewData["tableLibres"]
+                </h1>
+            </p>
+        </div>
+    </div>
+</div>
+
+<h1>Index</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Number)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NumberOfPlace)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Occupation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Place)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Serveur)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Number)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NumberOfPlace)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Occupation)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Place)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Serveur.Name)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.ID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.ID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

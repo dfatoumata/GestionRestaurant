@@ -1,5 +1,6 @@
 ﻿using GestionRestaurant.Models;
 using GestionRestaurant.Models.Context;
+using GestionRestaurant.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -28,7 +29,9 @@ namespace GestionRestaurant.Repositories.Implementations
         }
         public Consommation GetByID(int Id)
         {
-            return _dbContext.Consommations.Find(Id);
+            var Consommations = _dbContext.Consommations.Find(Id);
+            _dbContext.Entry(Consommations).State = EntityState.Detached;
+            return Consommations;
         }
 
         public void Update(Consommation Consommation)
