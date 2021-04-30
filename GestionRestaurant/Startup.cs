@@ -57,8 +57,11 @@ namespace GestionRestaurant
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ApplicationDbContext applicationDbContext)
         {
+            // migrate any database changes on startup (includes initial db creation)
+            applicationDbContext.Database.Migrate();
+
             app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
             if (env.IsDevelopment())
@@ -90,6 +93,7 @@ namespace GestionRestaurant
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
 
         }
     }
